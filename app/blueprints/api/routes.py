@@ -14,26 +14,26 @@ def get_posts():
     posts = [p.to_dict() for p in Post.query.all()]
     return jsonify(posts)
 
-# TEST ROUTE
-@api.route('/poster', methods=['POST'])
-def get_poster():
-    """
-    [GET] /api/poster
-    """
-    data = json.loads(request.data.decode('utf-8'))
-    u = User.query.filter_by(email=data['user_email']).first()
-    # print(u)
-    # posts = [p.to_dict() for p in Post.query.all()]
-    return jsonify([p.to_dict() for p in  u.posts.all()])
-    # return jsonify(posts)
-# TEST ROUTE
+# # TEST ROUTE
+# @api.route('/poster', methods=['POST'])
+# def get_poster():
+#     """
+#     [GET] /api/poster
+#     """
+#     data = json.loads(request.data.decode('utf-8'))
+#     u = User.query.filter_by(email=data['user_email']).first()
+#     # print(u)
+#     # posts = [p.to_dict() for p in Post.query.all()]
+#     return jsonify([p.to_dict() for p in  u.posts.all()])
+#     # return jsonify(posts)
+# # TEST ROUTE
 
 # Single posts
-@api.route('/post/<id>', methods=['GET'])
+@api.route('/posts/<id>', methods=['GET'])
 def get_post(id):
     print(id)
     """
-    [GET] /api/post/<id>
+    [GET] /api/posts/<id>
     """
     return jsonify(Post.query.get_or_404(id).to_dict()) 
 
@@ -50,10 +50,10 @@ def create_post():
     return jsonify({ 'message': 'CREATED POST' })
 
 # Updating existing posts
-@api.route('/post/<id>', methods=['PUT'])
+@api.route('/posts/<id>', methods=['PUT'])
 def update_post(id):
     """
-    [PUT] /api/posts
+    [PUT] /api/posts/<id>
     """
     post = Post.query.get(id)
     post.from_dict(request.json)
@@ -61,10 +61,10 @@ def update_post(id):
     return jsonify(post.to_dict())
 
 # Delete existing posts
-@api.route('/post/<id>', methods=['DELETE'])
+@api.route('/posts/<id>', methods=['DELETE'])
 def delete_post(id):
     """
-    [DELETE] /api/posts
+    [DELETE] /api/posts/<id>
     """
     post = Post.query.get(id)
     post.delete()
