@@ -25,4 +25,4 @@ class Todo(db.Model):
     def from_dict(self, data):
         for field in ['title']:
             if field in data:
-                setattr(self, field)
+                setattr(self, field, data[field])
